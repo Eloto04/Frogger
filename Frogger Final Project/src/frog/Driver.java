@@ -105,6 +105,8 @@ public class Driver extends JPanel implements ActionListener, KeyListener
 		Driver d = new Driver();
 	}
 
+	//sets up all objects on screen
+	
 	public Driver() {
 		JFrame f = new JFrame();
 		f.setTitle("Frogger");
@@ -114,10 +116,10 @@ public class Driver extends JPanel implements ActionListener, KeyListener
 
 		// sprite instantiation
 
-		froggy = new Froggy("frogpic.png");
+		froggy = new Froggy("boxingcat.png");
 
 		for (int i = 0; i < car2.length; i++) {
-			car2[i] = new Car("carpic.png", i * 250 + 400, 350);
+			car2[i] = new Car("smartcar.png", i * 250 + 400, 350);
 		}
 
 		//Add background
@@ -143,12 +145,32 @@ public class Driver extends JPanel implements ActionListener, KeyListener
 		// 40 down,
 		// 39 ->
 		System.out.println("key is pressed");
-		if (e.getKeyCode() == KeyEvent.VK_W) {
+		/*if (e.getKeyCode() == KeyEvent.VK_W) {
 			froggy.setVy(-5);
-		}
+		}*/
 
+	/** assignment **/
+	//be able to move the frog up, down, left, and right
+
+	switch(e.getKeyCode()) {
+	
+	case KeyEvent.VK_W:
+		froggy.hop(0);
+		break;
+	case KeyEvent.VK_S:
+		froggy.hop(1);
+		break;
+	case KeyEvent.VK_A:
+		froggy.hop(2);
+		break;
+	case KeyEvent.VK_D:
+		froggy.hop(3);
+		break;
+	
+	}
 		
-
+		
+		
 	}
 
 	@Override

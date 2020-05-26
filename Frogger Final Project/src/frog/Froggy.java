@@ -16,7 +16,7 @@ public class Froggy {
 	private int vx, vy;
 	private boolean alive; // lives
 	private int width; // the size of frog
-	private int hieght;
+	private int height;
 	private String fileName;
 	private Image img; // image of the frog
 
@@ -33,7 +33,7 @@ public class Froggy {
 		vx = 0;
 		vy = 0;
 		width = 50;
-		hieght = 50;
+		height = 50;
 
 		img = getImage(fileName);
 		init(x, y);
@@ -49,17 +49,17 @@ public class Froggy {
 	}
 
 	public int getHieght() {
-		return hieght;
+		return height;
 	}
 
 	public void setHieght(int hieght) {
-		this.hieght = hieght;
+		this.height = hieght;
 	}
 
 	public boolean collided(int ox, int oy, int ow, int oh) {
 
 		Rectangle obs = new Rectangle(ox, oy, ow, oh);
-		Rectangle froggy = new Rectangle(x, y, width, hieght);
+		Rectangle froggy = new Rectangle(x, y, width, height);
 		System.out.println(obs);
 		System.out.println(froggy);
 		return obs.intersects(froggy);
@@ -75,6 +75,27 @@ public class Froggy {
 
 	}
 
+	public void hop(int dir) {
+		
+		switch(dir) {
+		case 0:
+			y-=height;
+			break;
+		case 1:
+			y+=height;
+			break;
+		case 2:
+			x-=width;
+			break;
+		case 3:
+			x+=width;
+			break;
+			
+		}
+		
+		
+	}
+	
 	private AffineTransform tx = AffineTransform.getTranslateInstance(x, y);
 
 	// draw the affine transform
