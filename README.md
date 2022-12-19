@@ -8,4 +8,4 @@ A - Left
 S - Down
 D - Right
 
-The game can be found in the master branch.
+The game files may be found in the master branch.
