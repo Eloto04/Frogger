@@ -4,58 +4,56 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
-import java.awt.Toolkit;
-import java.awt.geom.AffineTransform;
-import java.net.URL;
 
-public class Froggy {
+public class Froggy extends Sprite{
 
 	// attributes of a frog
 
-	private int x, y; // Position of frog
-	private int vx, vy;
 	private boolean alive; // lives
-	private int width; // the size of frog
-	private int height;
-	private String fileName;
-	private Image img; // image of the frog
-
+	protected boolean onLog = false;
+	
 	// write the constructor for froggy which tales in
 	// a string fileName that will be used for the image setup
 	// set x and y to be in the middle of a 400x400 screen
 	// set width and height to 50
 
+	protected Image left, right, up, down;
+	
 	public Froggy(String fileName) {
 		// assignment statements for attributes
 
+		super(fileName);
+		
 		x = 400;
 		y = 800;
 		vx = 0;
 		vy = 0;
 		width = 50;
 		height = 50;
-
-		img = getImage(fileName);
-		init(x, y);
+		
+		left = getImage("newfrogleft.png");
+		right = getImage("newfrogright.png");
+		up = getImage("newfrog.png");
+		down = getImage("newfrogdown.png");
 
 	}
 
-	public int getWidth() {
-		return width;
+	public void onLog() {
+		
+		onLog = true;
+		
 	}
-
-	public void setWidth(int width) {
-		this.width = width;
+	
+	public void notOnLog() {
+		
+		onLog = false;
+		
 	}
-
-	public int getHieght() {
-		return height;
+	
+	public boolean getOnLog() {
+		return onLog;
 	}
-
-	public void setHieght(int hieght) {
-		this.height = hieght;
-	}
-
+	
 	public boolean collided(int ox, int oy, int ow, int oh) {
 
 		Rectangle obs = new Rectangle(ox, oy, ow, oh);
@@ -79,25 +77,49 @@ public class Froggy {
 		
 		switch(dir) {
 		case 0:
+			img = up;
 			y-=height;
 			break;
 		case 1:
+			img = down;
 			y+=height;
 			break;
 		case 2:
-			x-=width;
+			img = left;
+			if(onLog == true) {
+				x-=(width*2);
+			} else {
+				x-=width;
+			}
+			
 			break;
 		case 3:
-			x+=width;
+			img = right;
+			if(onLog == true) {
+				x+=(width*2);
+			} else {
+				x+=width;
+			}
+			
 			break;
 			
 		}
 		
 		
 	}
-	
-	private AffineTransform tx = AffineTransform.getTranslateInstance(x, y);
 
+	public void colMove() {
+		x += vx;
+	}
+	
+	public void reset() {
+		
+		x = 400;
+		y = 800;
+		img = up;
+		
+	}
+	
 	// draw the affine transform
 	public void paint(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
@@ -106,50 +128,8 @@ public class Froggy {
 		
 	}
 
-	private void init(double a, double b) {
-		tx.setToTranslation(a, b);
-		tx.scale(1, 1);
-	}
-
 	// converts image to make it drawable in paint
-	private Image getImage(String path) {
-		Image tempImage = null;
-		try {
-			URL imageURL = Froggy.class.getResource(path);
-			tempImage = Toolkit.getDefaultToolkit().getImage(imageURL);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return tempImage;
-	}
 
 	// setters and getters
-
-	public void setVx(int vx) {
-		this.vx = vx;
-	}
-
-	public void setVy(int vy) {
-		this.vy = vy;
-		
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-		tx.setToTranslation(x, y);
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-		tx.setToTranslation(x, y);
-	}
 
 }
